@@ -1,8 +1,23 @@
 #  2020 ICLR- AUGMIX: "A SIMPLE DATA PROCESSING METHOD TO IMPROVE ROBUSTNESS AND UNCERTAINTY"
 
-## Motivation
+##  Overview
 
 本文主要想解决的是training data and testing data的分布不同的问题。 一般的数据增广方法倾向于让模型去记住这些增加的数据，而不是真的学习到里面的规律。 而且很多的data augmentation 方法 会有 clean accuracy , computational compleixty, robustness 与 uncertainty estimation之间的trade-off吧。
+
+
+
+然后相比于连续的做一系列变换引起变化后的图像与原始图像差距太大并且多样性不够， 所以采用随机选取一些transform operation 来解决这问题。
+
+>**Flow**
+>
+>1. 从Dirichlet分布采样权值每一步变化的权重$w_i$
+>2. 从transform pool $\mathcal O$   随机采样operation $O$
+>3. 第k步的图像 $x_k=x_{k-1}+w_k\times O(x_{orig})$
+>4. 循环K步后再和原始图片插值 $x_{aug}=m.x_{orig}+(1-m)x_K$ , 其中权重m从beta分布采样
+>
+>
+
+
 
 
 

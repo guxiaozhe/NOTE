@@ -12,7 +12,7 @@
 
 #  2019 ICCV  -Cutmix: "Regularization strategy to train strong classifiers with localizable features”
 
-##Overview
+## Overview
 
 随机把另一个图像的patch 覆盖的当前图像。主要解决随机擦除方法里 单幅图片的信息量是减少的问题。
 
@@ -32,7 +32,7 @@
 
 # 2017 ICLR - Mixup "mixup: Beyond empirical   risk minimization”
 
-##Overview
+## Overview
 
 随机选取两个图像 并按比例插值
 
@@ -40,10 +40,8 @@
 
 # 2017 Random  Cutout "Improved regularization of convolutional neural networks with Cutout".
 
-##Overview
+## Overview
 
 随机擦除一个patch 图像。 原理可以解释成如果一个让模型通过图片的不同部分，而不是仅仅局限在某个最显著特征（比如head）来做出决策。 然后在cutmix里指出，这样的缺陷是 每幅图片的信息量是减少的
 
 
-
-# 

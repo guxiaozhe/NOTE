@@ -18,7 +18,7 @@
 
 
 
-#2019 Patch Gaussian augments  "Improving robustness without sacrificing accuracy with patch Gaussian augmentation”
+# 2019 Patch Gaussian augments  "Improving robustness without sacrificing accuracy with patch Gaussian augmentation”
 
 ## Overview
 

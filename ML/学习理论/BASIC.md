@@ -11,13 +11,9 @@
 **期望预测误差EPE**
 $$
 \text{EPE}(\hat f)=\mathbb E_{p(X,Y)} \left[(Y-\hat f(X))^2\right]\\\\
-=\int p(x)\left[\int \left(y-\hat f(x)\right)^2 p(y|x)dy\right]dx \\\\
-=\mathbb E_{p(X)}\left[~~\mathbb E_{p(Y|X)} \left[(Y-\hat f(X))^2 |X\right]\right]\\\\
-$$
-
-$$
+=\int p(x)\left[\int \left(y-\hat f(x)\right)^2 p(y|x)dy\right]dx =\mathbb E_{p(X)}\left[~~\mathbb E_{p(Y|X)} \left[(Y-\hat f(X))^2 |X\right]\right]\\\\
 \mbox{minimize  pointwise}\Rightarrow   \min\mathbb E_{p(Y|x)}[(Y-\hat f(x))^2 |x]\\\\
-=\min \underbrace{\mathbb E[Y^2|x]}_{\text {constant}}+\hat f(x)^2-2\hat f(x) \underbrace{\mathbb E[Y|x]}_{\text {constant}}\\\\
+=\min \underbrace{\mathbb E[Y^2|x]}\_{\text {constant}}+\hat f(x)^2-2\hat f(x) \underbrace{\mathbb E[Y|x]}\_{\text {constant}}\\\\
 \Rightarrow \hat f(x)=\mathbb E[Y|x]
 $$
 
@@ -36,7 +32,7 @@ $$
 $$
 \mathbb E\left[(y-\hat y)^2|x\right]=\mathbb E\left[~~y^2+\hat y^2-2y\hat y+\mathbb E[\hat y]^2-\mathbb E[\hat y]^2+2\mathbb E[\hat y]\hat y-2\mathbb E[\hat y]\hat y~~\right]\\\\
 =\mathbb E[(\hat y-\mathbb E[\hat y])^2]+y^2-2y\mathbb E[\hat y]-\mathbb E[\hat y]^2+2\mathbb E[\hat y]^2\\\\
-=\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}_{\text{variance}}+\underbrace{(y-\mathbb E[\hat y])^2}_{\text{bias square}}
+=\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}_{\text{variance}}+\underbrace{(y-\mathbb E[\hat y])^2}\_{\text{bias square}}
 $$
 
 ###    假设 $Y=f(X)+\epsilon,~\mathbb E[\epsilon]=0, \text{Var}(\epsilon)=\sigma^2$
@@ -44,9 +40,9 @@ $$
 训练数据集$\mathcal D$,     那么某一个点$ (x,y)$  误差Bias  Variance 分解。
 
 $$
-\mathbb E\left[(y-\hat y)^2\right]=\mathbb E\left[(f(x)+\epsilon-\hat y)^2\right]\\
-=\mathbb E\left[ (f(x)-\hat y)^2+\epsilon^2+2\epsilon(f(x)-\hat y )     \right]\\
-=\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}_{\text{variance}}+\underbrace{f(x)^2+\mathbb E[\hat y]^2-2f(x)\mathbb E[\hat y]}_{\text{bias square}}+Var(\epsilon)\\
+\mathbb E\left[(y-\hat y)^2\right]=\mathbb E\left[(f(x)+\epsilon-\hat y)^2\right]\\\\
+=\mathbb E\left[ (f(x)-\hat y)^2+\epsilon^2+2\epsilon(f(x)-\hat y )     \right]\\\\
+=\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}\_{\text{variance}}+\underbrace{f(x)^2+\mathbb E[\hat y]^2-2f(x)\mathbb E[\hat y]}\_{\text{bias square}}+Var(\epsilon)
 $$
 
 ### Bias-Variance Tradeoff

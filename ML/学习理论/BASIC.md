@@ -76,8 +76,9 @@ $$
 以最小化绝对值误差为目标，那么最佳模型就是条件中位数]
 
 $$
-\mbox{EPE}(f)=\mathbb E \left[~|Y-f(X)|~\right]=\int p(x)\int  |y-f(x)|  p(y|x)dydx\\
- \mbox{minimize EPE pointwise }L(x)=\int  |y-\hat y|  p(y|x)dy\Rightarrow   \\\frac{\partial L}{\partial \hat y}=0=\int \mbox{sign}(y\geq \hat y)   p(y|x)dy=\int^{\hat y} -   p(y|x)dy+\int_{\hat y}   p(y|x)dy=0\\
+\mbox{EPE}(f)=\mathbb E \left[~|Y-f(X)|~\right]=\int p(x)\int  |y-f(x)|  p(y|x)dydx\\\\
+ \mbox{minimize EPE pointwise }L(x)=\int  |y-\hat y|  p(y|x)dy\Rightarrow \\\\
+ \frac{\partial L}{\partial \hat y}=0=\int \mbox{sign}(y\geq \hat y)   p(y|x)dy=\int^{\hat y} -   p(y|x)dy+\int_{\hat y}   p(y|x)dy=0\\\\
  \Rightarrow  \hat y=\mbox{median, i.e. cdf=0.5}
 $$
 
@@ -176,18 +177,18 @@ $$
 — 假设空间 hypothesis set H, where $\hat y=h(x)$
 
 —  泛华误差Generalization Error 
+
 $$
 R(h)=\mbox{P}_{x\sim D}(h(x)\neq y)=\mathbb E_{x\sim D}[\mathbf  1_(\hat y\neq y)]
 $$
+
 — 经验误差Empirical Error
 $$
-\hat R(h)=\frac{1}{m}\sum_{i=1}^m \mathbf  1_{(h(x^i)\neq y)}\\
-\mbox{根据中心极限定理 }\\
-
+\hat R(h)=\frac{1}{m}\sum_{i=1}^m \mathbf  1_{(h(x^i)\neq y)}\\\\
+\mbox{根据中心极限定理 }\\\\
 \mathbb E_{x\sim D}[\hat R(h)]=\sum_{i=1}^m \mathbb E_{x^i\sim D}[\mathbf  1_{( h(x)\neq y)}]
-\\
-
-=R(h)\\
+\\\\
+=R(h)
 $$
 
 

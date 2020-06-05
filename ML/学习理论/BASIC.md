@@ -31,8 +31,9 @@ $$
 
 $$
 \mathbb E\left[(y-\hat y)^2|x\right]=\mathbb E\left[~~y^2+\hat y^2-2y\hat y+\mathbb E[\hat y]^2-\mathbb E[\hat y]^2+2\mathbb E[\hat y]\hat y-2\mathbb E[\hat y]\hat y~~\right]\\\\
+
 =\mathbb E[(\hat y-\mathbb E[\hat y])^2]+y^2-2y\mathbb E[\hat y]-\mathbb E[\hat y]^2+2\mathbb E[\hat y]^2\\\\
-=\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}_{\text{variance}}+\underbrace{(y-\mathbb E[\hat y])^2}\_{\text{bias square}}
+=\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}\_{\text{variance}}+\underbrace{(y-\mathbb E[\hat y])^2}\_{\text{bias square}}
 $$
 
 ###    假设 $Y=f(X)+\epsilon,~\mathbb E[\epsilon]=0, \text{Var}(\epsilon)=\sigma^2$
@@ -54,10 +55,10 @@ KNN的模型 $\hat y=\hat f_k(x)=\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}$
 KNN的模型Bias-Variance 分解
 
 $$
-\mathbb E[(\hat y-y)^2]={\mathbb E[(\hat y-\mathbb E[\hat y])^2]}+({f(x)-\mathbb E[\hat y]})^2+\sigma^2\\
-=\sigma^2+\mathbb E[(\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}])^2]+({f(x)-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}]]})^2\\
-=\sigma^2+\frac{\mathbb E[\epsilon^2]}{K}+({f(x)-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}]]})^2\\
-=\sigma^2+\underbrace{\frac{\sigma^2}{K}}_{\text{variance}}+\underbrace{(f(x)-\frac{\sum_{k=1}^K f(x_k)}{K})^2}_{\text{bias square}}\\
+\mathbb E[(\hat y-y)^2]={\mathbb E[(\hat y-\mathbb E[\hat y])^2]}+({f(x)-\mathbb E[\hat y]})^2+\sigma^2\\\\
+=\sigma^2+\mathbb E[(\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}])^2]+({f(x)-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}]]})^2\\\\
+=\sigma^2+\frac{\mathbb E[\epsilon^2]}{K}+({f(x)-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}]]})^2\\\\
+=\sigma^2+\underbrace{\frac{\sigma^2}{K}}\_{\text{variance}}+\underbrace{(f(x)-\frac{\sum_{k=1}^K f(x_k)}{K})^2}\_{\text{bias square}}\\
 $$
 
 >分析：当k小的时候，模型复杂度大， variance大，bias 更小，（因为 更近的点 更大概率类似目标值）。
@@ -84,7 +85,7 @@ $$
 
 假设 $Y=f(X;\theta)+\epsilon$, where $\epsilon\sim N(0,\sigma^2)$, 那么
 $$
-\mbox{P}(Y|X;\theta)\sim N(f(X;\theta),\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{(Y-f(X;\theta))^2}{2\sigma^2})\\
+\mbox{P}(Y|X;\theta)\sim N(f(X;\theta),\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{(Y-f(X;\theta))^2}{2\sigma^2})\\\\
 \log \mbox{P}(Y|X;\theta)=-\frac{(Y-f(X;\theta))^2}{2\sigma^2}+\text{constsant}
 $$
 
@@ -93,8 +94,8 @@ $$
 
 $$
 P(
-\mathbf Y|\mathbf X;\theta)=\prod_{i=1}^N\mbox{P}(y^i|x^i;\theta)\\
-\log P(\mathbf Y|\mathbf X;\theta)= \sum_{i=1}^N -\frac{(y^i-f(x^i;\theta))^2}{2\sigma^2}+\text{constsant}\\
+\mathbf Y|\mathbf X;\theta)=\prod_{i=1}^N\mbox{P}(y^i|x^i;\theta)\\\\
+\log P(\mathbf Y|\mathbf X;\theta)= \sum_{i=1}^N -\frac{(y^i-f(x^i;\theta))^2}{2\sigma^2}+\text{constsant}\\\\
 \arg \max_{\theta}P(\mathbf Y|\mathbf X;\theta) =\arg \min_{\theta}  \sum_{i=1}^N(y^i-f(x^i;\theta))^2
 $$
 
@@ -116,12 +117,12 @@ $$
 $$
 由贝叶斯公式得后验概率
 $$
-P(\theta|\mathbf Y,\mathbf X)=\frac{P(\mathbf Y|\theta,\mathbf X)P(\theta)}{P(\mathbf Y|\mathbf X)}\propto P(\mathbf Y|\theta,\mathbf X)P(\theta)\\
+P(\theta|\mathbf Y,\mathbf X)=\frac{P(\mathbf Y|\theta,\mathbf X)P(\theta)}{P(\mathbf Y|\mathbf X)}\propto P(\mathbf Y|\theta,\mathbf X)P(\theta)\\\\
 =\prod_{i=1}^N \frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{(y^i-f(x^i;\theta))^2}{2\sigma^2})\times \frac{1}{(\sqrt{2\pi})^n\det(\Sigma)}\exp(-1/2\theta^T\Sigma^{-1}\theta)\\
 $$
 Maximize MAE
 $$
-\theta_{MAE}=\arg\max_{\theta} P(\theta|\mathbf Y,\mathbf X)=\arg\max_{\theta} \log   P(\mathbf Y|\theta,\mathbf X)P(\theta)\\
+\theta_{MAE}=\arg\max_{\theta} P(\theta|\mathbf Y,\mathbf X)=\arg\max_{\theta} \log   P(\mathbf Y|\theta,\mathbf X)P(\theta)\\\\
 =\arg \min_{\theta} \sum_{i=1}^N\left (y^i-f(x^i;\theta)\right)^2+ \theta^T \Sigma^{-1}\theta
 $$
 
@@ -148,11 +149,11 @@ $$
 
 Empirical Risk :
 $$
-ER(\hat f)=\sum_i^n e(\hat f(x^i),y^i)=\sum_i^n \int e(\hat f(x),y^i)   \underbrace{\delta_{x^i}(x)}_{考虑单独x^i一个点}
+ER(\hat f)=\sum_i^n e(\hat f(x^i),y^i)=\sum_i^n \int e(\hat f(x),y^i)   \underbrace{\delta_{x^i}(x)}\_{考虑单独x^i一个点}
 $$
 而VRM 对于任意样本，考虑它的领域的分布
 $$
-VR(\hat f)=\sum_i^n \int e(\hat f(x),y^i)   \underbrace{\delta_{x^i}(x)}_{考虑x^i邻域上的分布}
+VR(\hat f)=\sum_i^n \int e(\hat f(x),y^i)   \underbrace{\delta_{x^i}(x)}\_{考虑x^i邻域上的分布}
 $$
 
 

@@ -17,6 +17,8 @@ $$
 
 $$
 \mbox{minimize  pointwise}\Rightarrow   \min\mathbb E_{p(Y|x)}[(Y-\hat f(x))^2 |x]\\\\
+=\min \underbrace{\mathbb E[Y^2|x]}_{\text {constant}}+\hat f(x)^2-2\hat f(x) \underbrace{\mathbb E[Y|x]}_{\text {constant}}\\\\
+\Rightarrow \hat f(x)=\mathbb E[Y|x]
 $$
 
 

@@ -11,11 +11,8 @@
 >**期望预测误差EPE**
 $$
 \text{EPE}(\hat f)=\mathbb E_{p(X,Y)} \left[(Y-\hat f(X))^2\right]=\int p(x)\left[\int \left(y-\hat f(x)\right)^2 p(y|x)dy\right]dx \\\\
-
 =\mathbb E_{p(X)}\left[~~\mathbb E_{p(Y|X)} \left[(Y-\hat f(X))^2 |X\right]\right]\\\\
-
 \mbox{minimize  pointwise}\Rightarrow   \min\mathbb E_{p(Y|x)}[(Y-\hat f(x))^2 |x]\\\\
-
 =\min \underbrace{\mathbb E[Y^2|x]}_{\text {constant}}+\hat f(x)^2-2\hat f(x) \underbrace{\mathbb E[Y|x]}_{\text {constant}}\\\\
 \Rightarrow \hat f(x)=\mathbb E[Y|x]
 $$

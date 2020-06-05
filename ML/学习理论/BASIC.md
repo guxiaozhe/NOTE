@@ -12,6 +12,7 @@
 $$
 \text{EPE}(\hat f)=\mathbb E_{p(X,Y)} \left[(Y-\hat f(X))^2\right]\\\\
 =\int p(x)\left[\int \left(y-\hat f(x)\right)^2 p(y|x)dy\right]dx \\\\
+=\mathbb E_{p(X)}\left[~~\mathbb E_{p(Y|X)} \left[(Y-\hat f(X))^2 |X\right]\right]\\\\
 $$
 
 

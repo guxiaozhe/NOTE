@@ -13,6 +13,9 @@ $$
 \text{EPE}(\hat f)=\mathbb E_{p(X,Y)} \left[(Y-\hat f(X))^2\right]\\\\
 =\int p(x)\left[\int \left(y-\hat f(x)\right)^2 p(y|x)dy\right]dx \\\\
 =\mathbb E_{p(X)}\left[~~\mathbb E_{p(Y|X)} \left[(Y-\hat f(X))^2 |X\right]\right]\\\\
+\mbox{minimize  pointwise}\Rightarrow   \min\mathbb E_{p(Y|x)}[(Y-\hat f(x))^2 |x]\\\\
+=\min \underbrace{\mathbb E[Y^2|x]}_{\text {constant}}+\hat f(x)^2-2\hat f(x) \underbrace{\mathbb E[Y|x]}_{\text {constant}}\\\\
+\Rightarrow \hat f(x)=\mathbb E[Y|x]
 $$
 
 
@@ -29,8 +32,8 @@ $$
 训练数据集$\mathcal D$,   常数label y,  那么某一个点$(x,y)$误差Bias  Variance 分解。
 
 $$
-\mathbb E\left[(y-\hat y)^2|x\right]=\mathbb E\left[~~y^2+\hat y^2-2y\hat y+\mathbb E[\hat y]^2-\mathbb E[\hat y]^2+2\mathbb E[\hat y]\hat y-2\mathbb E[\hat y]\hat y~~\right]\\
-=\mathbb E[(\hat y-\mathbb E[\hat y])^2]+y^2-2y\mathbb E[\hat y]-\mathbb E[\hat y]^2+2\mathbb E[\hat y]^2\\
+\mathbb E\left[(y-\hat y)^2|x\right]=\mathbb E\left[~~y^2+\hat y^2-2y\hat y+\mathbb E[\hat y]^2-\mathbb E[\hat y]^2+2\mathbb E[\hat y]\hat y-2\mathbb E[\hat y]\hat y~~\right]\\\\
+=\mathbb E[(\hat y-\mathbb E[\hat y])^2]+y^2-2y\mathbb E[\hat y]-\mathbb E[\hat y]^2+2\mathbb E[\hat y]^2\\\\
 =\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}_{\text{variance}}+\underbrace{(y-\mathbb E[\hat y])^2}_{\text{bias square}}
 $$
 

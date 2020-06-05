@@ -28,6 +28,7 @@ $$
 ###  对于一个特定点 $(x,y)$  和模型$\hat y$ 
 
 训练数据集$\mathcal D$,   常数label y,  那么某一个点$(x,y)$误差Bias  Variance 分解。
+
 $$
 \mathbb E\left[(y-\hat y)^2|x\right]=\mathbb E\left[~~y^2+\hat y^2-2y\hat y+\mathbb E[\hat y]^2-\mathbb E[\hat y]^2+2\mathbb E[\hat y]\hat y-2\mathbb E[\hat y]\hat y~~\right]\\
 =\mathbb E[(\hat y-\mathbb E[\hat y])^2]+y^2-2y\mathbb E[\hat y]-\mathbb E[\hat y]^2+2\mathbb E[\hat y]^2\\
@@ -37,6 +38,7 @@ $$
 ###    假设 $Y=f(X)+\epsilon,~\mathbb E[\epsilon]=0, \text{Var}(\epsilon)=\sigma^2$
 
 训练数据集$\mathcal D$,     那么某一个点$ (x,y)$  误差Bias  Variance 分解。
+
 $$
 \mathbb E\left[(y-\hat y)^2\right]=\mathbb E\left[(f(x)+\epsilon-\hat y)^2\right]\\
 =\mathbb E\left[ (f(x)-\hat y)^2+\epsilon^2+2\epsilon(f(x)-\hat y )     \right]\\
@@ -50,12 +52,14 @@ $$
 KNN的模型 $\hat y=\hat f_k(x)=\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}$
 
 KNN的模型Bias-Variance 分解
+
 $$
 \mathbb E[(\hat y-y)^2]={\mathbb E[(\hat y-\mathbb E[\hat y])^2]}+({f(x)-\mathbb E[\hat y]})^2+\sigma^2\\
 =\sigma^2+\mathbb E[(\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}])^2]+({f(x)-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}]]})^2\\
 =\sigma^2+\frac{\mathbb E[\epsilon^2]}{K}+({f(x)-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}]]})^2\\
 =\sigma^2+\underbrace{\frac{\sigma^2}{K}}_{\text{variance}}+\underbrace{(f(x)-\frac{\sum_{k=1}^K f(x_k)}{K})^2}_{\text{bias square}}\\
 $$
+
 >分析：当k小的时候，模型复杂度大， variance大，bias 更小，（因为 更近的点 更大概率类似目标值）。
 
 
@@ -69,6 +73,7 @@ $$
  ## 最小化“期望绝对误差 ”  = 中位数
 
 以最小化绝对值误差为目标，那么最佳模型就是条件中位数]
+
 $$
 \mbox{EPE}(f)=\mathbb E \left[~|Y-f(X)|~\right]=\int p(x)\int  |y-f(x)|  p(y|x)dydx\\
  \mbox{minimize EPE pointwise }L(x)=\int  |y-\hat y|  p(y|x)dy\Rightarrow   \\\frac{\partial L}{\partial \hat y}=0=\int \mbox{sign}(y\geq \hat y)   p(y|x)dy=\int^{\hat y} -   p(y|x)dy+\int_{\hat y}   p(y|x)dy=0\\

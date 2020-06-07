@@ -32,7 +32,7 @@ $$
 训练数据集$\mathcal D$,   常数label y,  那么某一个点$(x,y)$误差Bias  Variance 分解。
 
 $$
-\mathbb E\left[(y-\hat y)^2|x\right]=\mathbb E\left[~~y^2+\hat y^2-2y\hat y+\mathbb E[\hat y]^2-\mathbb E[\hat y]^2+2\mathbb E[\hat y]\hat y-2\mathbb E[\hat y]\hat y~~\right]\\\\
+\mathbb E\left[(y-\hat y)^2|x\right]=\mathbb E\left[y^2+\hat y^2-2y\hat y+\mathbb E[\hat y]^2-\mathbb E[\hat y]^2+2\mathbb E[\hat y]\hat y-2\mathbb E[\hat y]\hat y\right]\\\\
 =\mathbb E[(\hat y-\mathbb E[\hat y])^2]+y^2-2y\mathbb E[\hat y]-\mathbb E[\hat y]^2+2\mathbb E[\hat y]^2\\\\
 =\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}\_{\text{variance}}+\underbrace{(y-\mathbb E[\hat y])^2}\_{\text{bias square}}
 $$

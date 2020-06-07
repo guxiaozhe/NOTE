@@ -177,7 +177,7 @@ $$
 
 — 假设空间 hypothesis set H, where $\hat y=h(x)$
 
-—  泛华误差Generalization Error $R(h)=\mbox{P}_{x\sim D}(h(x)\neq y)=\mathbb E_{x\sim D}[\mathbf  1(\hat y\neq y)]$
+—  泛华误差Generalization Error $R(h)=P_{x\sim D}(h(x)\neq y)=\mathbb E_{x\sim D}[\mathbf  1(\hat y\neq y)]$
 
 — 经验误差Empirical Error
 $$

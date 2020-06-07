@@ -179,17 +179,18 @@ $$
 
 —  泛华误差Generalization Error 
 $$
-R(h)=\mbox{P}_{x\sim D}(h(x)\neq y)=\mathbb E_{x\sim D}[\mathbf  1_(\hat y\neq y)]
+R(h)=\mbox{P}_{x\sim D}(h(x)\neq y)=\mathbb E_{x\sim D}[\mathbf  1(\hat y\neq y)]
 $$
 — 经验误差Empirical Error
 $$
-\hat R(h)=\frac{1}{m}\sum_{i=1}^m \mathbf  1_{(h(x^i)\neq y)}\\\\
+\hat R(h)=\frac{1}{m}\sum_{i=1}^m \mathbf  1{(h(x^i)\neq y)}\\\\
+
 \mbox{根据中心极限定理 }\\\\
 
-\mathbb E_{x\sim D}[\hat R(h)]=\sum_{i=1}^m \mathbb E_{x^i\sim D}[\mathbf  1_{( h(x)\neq y)}]
+\mathbb E_{x\sim D}[\hat R(h)]=\sum_{i=1}^m \mathbb E_{x^i\sim D}[\mathbf  1{( h(x)\neq y)}]
 \\\\
 
-=R(h)\\
+=R(h)
 $$
 
 

@@ -14,7 +14,7 @@ $$
 =\int p(x)\left[\int \left(y-\hat f(x)\right)^2 p(y|x)dy\right]dx \\\\
 =\mathbb E_{p(X)}\left[~~\mathbb E_{p(Y|X)} \left[(Y-\hat f(X))^2 |X\right]\right]\\\\
 \mbox{minimize  pointwise}\Rightarrow   \min\mathbb E_{p(Y|x)}[(Y-\hat f(x))^2 |x]\\\\
-=\min \underbrace{\mathbb E[Y^2|x]}_{\text {constant}}+\hat f(x)^2-2\hat f(x) \underbrace{\mathbb E[Y|x]}_{\text {constant}}\\\\
+=\min \underbrace{\mathbb E[Y^2|x]}\_{\text {constant}}+\hat f(x)^2-2\hat f(x) \underbrace{\mathbb E[Y|x]}\_{\text {constant}}\\\\
 \Rightarrow \hat f(x)=\mathbb E[Y|x]
 $$
 
@@ -32,9 +32,9 @@ $$
 训练数据集$\mathcal D$,   常数label y,  那么某一个点$(x,y)$误差Bias  Variance 分解。
 
 $$
-\mathbb E\left[(y-\hat y)^2|x\right]=\mathbb E\left[~~y^2+\hat y^2-2y\hat y+\mathbb E[\hat y]^2-\mathbb E[\hat y]^2+2\mathbb E[\hat y]\hat y-2\mathbb E[\hat y]\hat y~~\right]\\
-=\mathbb E[(\hat y-\mathbb E[\hat y])^2]+y^2-2y\mathbb E[\hat y]-\mathbb E[\hat y]^2+2\mathbb E[\hat y]^2\\
-=\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}_{\text{variance}}+\underbrace{(y-\mathbb E[\hat y])^2}_{\text{bias square}}
+\mathbb E\left[(y-\hat y)^2|x\right]=\mathbb E\left[~~y^2+\hat y^2-2y\hat y+\mathbb E[\hat y]^2-\mathbb E[\hat y]^2+2\mathbb E[\hat y]\hat y-2\mathbb E[\hat y]\hat y~~\right]\\\\
+=\mathbb E[(\hat y-\mathbb E[\hat y])^2]+y^2-2y\mathbb E[\hat y]-\mathbb E[\hat y]^2+2\mathbb E[\hat y]^2\\\\
+=\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}\_{\text{variance}}+\underbrace{(y-\mathbb E[\hat y])^2}\_{\text{bias square}}
 $$
 
 ###    假设 $Y=f(X)+\epsilon,~\mathbb E[\epsilon]=0, \text{Var}(\epsilon)=\sigma^2$
@@ -42,9 +42,9 @@ $$
 训练数据集$\mathcal D$,     那么某一个点$ (x,y)$  误差Bias  Variance 分解。
 
 $$
-\mathbb E\left[(y-\hat y)^2\right]=\mathbb E\left[(f(x)+\epsilon-\hat y)^2\right]\\
-=\mathbb E\left[ (f(x)-\hat y)^2+\epsilon^2+2\epsilon(f(x)-\hat y )     \right]\\
-=\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}_{\text{variance}}+\underbrace{f(x)^2+\mathbb E[\hat y]^2-2f(x)\mathbb E[\hat y]}_{\text{bias square}}+Var(\epsilon)\\
+\mathbb E\left[(y-\hat y)^2\right]=\mathbb E\left[(f(x)+\epsilon-\hat y)^2\right]\\\\
+=\mathbb E\left[ (f(x)-\hat y)^2+\epsilon^2+2\epsilon(f(x)-\hat y )     \right]\\\\
+=\underbrace{\mathbb E[(\hat y-\mathbb E[\hat y])^2]}\_{\text{variance}}+\underbrace{f(x)^2+\mathbb E[\hat y]^2-2f(x)\mathbb E[\hat y]}\_{\text{bias square}}+Var(\epsilon)\\
 $$
 
 ### Bias-Variance Tradeoff
@@ -56,10 +56,10 @@ KNN的模型 $\hat y=\hat f_k(x)=\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}$
 KNN的模型Bias-Variance 分解
 
 $$
-\mathbb E[(\hat y-y)^2]={\mathbb E[(\hat y-\mathbb E[\hat y])^2]}+({f(x)-\mathbb E[\hat y]})^2+\sigma^2\\
-=\sigma^2+\mathbb E[(\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}])^2]+({f(x)-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}]]})^2\\
-=\sigma^2+\frac{\mathbb E[\epsilon^2]}{K}+({f(x)-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}]]})^2\\
-=\sigma^2+\underbrace{\frac{\sigma^2}{K}}_{\text{variance}}+\underbrace{(f(x)-\frac{\sum_{k=1}^K f(x_k)}{K})^2}_{\text{bias square}}\\
+\mathbb E[(\hat y-y)^2]={\mathbb E[(\hat y-\mathbb E[\hat y])^2]}+({f(x)-\mathbb E[\hat y]})^2+\sigma^2\\\\
+=\sigma^2+\mathbb E[(\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}])^2]+({f(x)-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}]]})^2\\\\
+=\sigma^2+\frac{\mathbb E[\epsilon^2]}{K}+({f(x)-\mathbb E[\frac{\sum_{k=1}^K f(x_k)+\epsilon}{K}]]})^2\\\\
+=\sigma^2+\underbrace{\frac{\sigma^2}{K}}\_{\text{variance}}+\underbrace{(f(x)-\frac{\sum_{k=1}^K f(x_k)}{K})^2}\_{\text{bias square}}
 $$
 
 >分析：当k小的时候，模型复杂度大， variance大，bias 更小，（因为 更近的点 更大概率类似目标值）。
@@ -77,8 +77,9 @@ $$
 以最小化绝对值误差为目标，那么最佳模型就是条件中位数]
 
 $$
-\mbox{EPE}(f)=\mathbb E \left[~|Y-f(X)|~\right]=\int p(x)\int  |y-f(x)|  p(y|x)dydx\\
- \mbox{minimize EPE pointwise }L(x)=\int  |y-\hat y|  p(y|x)dy\Rightarrow   \\\frac{\partial L}{\partial \hat y}=0=\int \mbox{sign}(y\geq \hat y)   p(y|x)dy=\int^{\hat y} -   p(y|x)dy+\int_{\hat y}   p(y|x)dy=0\\
+\mbox{EPE}(f)=\mathbb E \left[~|Y-f(X)|~\right]=\int p(x)\int  |y-f(x)|  p(y|x)dydx\\\\
+ \mbox{minimize EPE pointwise }L(x)=\int  |y-\hat y|  p(y|x)dy\Rightarrow   \\\\
+ \frac{\partial L}{\partial \hat y}=0=\int \mbox{sign}(y\geq \hat y)   p(y|x)dy=\int^{\hat y} -   p(y|x)dy+\int_{\hat y}   p(y|x)dy=0\\\\
  \Rightarrow  \hat y=\mbox{median, i.e. cdf=0.5}
 $$
 
@@ -86,7 +87,7 @@ $$
 
 假设 $Y=f(X;\theta)+\epsilon$, where $\epsilon\sim N(0,\sigma^2)$, 那么
 $$
-\mbox{P}(Y|X;\theta)\sim N(f(X;\theta),\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{(Y-f(X;\theta))^2}{2\sigma^2})\\
+\mbox{P}(Y|X;\theta)\sim N(f(X;\theta),\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{(Y-f(X;\theta))^2}{2\sigma^2})\\\\
 \log \mbox{P}(Y|X;\theta)=-\frac{(Y-f(X;\theta))^2}{2\sigma^2}+\text{constsant}
 $$
 
@@ -95,8 +96,8 @@ $$
 
 $$
 P(
-\mathbf Y|\mathbf X;\theta)=\prod_{i=1}^N\mbox{P}(y^i|x^i;\theta)\\
-\log P(\mathbf Y|\mathbf X;\theta)= \sum_{i=1}^N -\frac{(y^i-f(x^i;\theta))^2}{2\sigma^2}+\text{constsant}\\
+\mathbf Y|\mathbf X;\theta)=\prod_{i=1}^N\mbox{P}(y^i|x^i;\theta)\\\\
+\log P(\mathbf Y|\mathbf X;\theta)= \sum_{i=1}^N -\frac{(y^i-f(x^i;\theta))^2}{2\sigma^2}+\text{constsant}\\\\
 \arg \max_{\theta}P(\mathbf Y|\mathbf X;\theta) =\arg \min_{\theta}  \sum_{i=1}^N(y^i-f(x^i;\theta))^2
 $$
 
@@ -118,12 +119,12 @@ $$
 $$
 由贝叶斯公式得后验概率
 $$
-P(\theta|\mathbf Y,\mathbf X)=\frac{P(\mathbf Y|\theta,\mathbf X)P(\theta)}{P(\mathbf Y|\mathbf X)}\propto P(\mathbf Y|\theta,\mathbf X)P(\theta)\\
-=\prod_{i=1}^N \frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{(y^i-f(x^i;\theta))^2}{2\sigma^2})\times \frac{1}{(\sqrt{2\pi})^n\det(\Sigma)}\exp(-1/2\theta^T\Sigma^{-1}\theta)\\
+P(\theta|\mathbf Y,\mathbf X)=\frac{P(\mathbf Y|\theta,\mathbf X)P(\theta)}{P(\mathbf Y|\mathbf X)}\propto P(\mathbf Y|\theta,\mathbf X)P(\theta)\\\\
+=\prod_{i=1}^N \frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{(y^i-f(x^i;\theta))^2}{2\sigma^2})\times \frac{1}{(\sqrt{2\pi})^n\det(\Sigma)}\exp(-1/2\theta^T\Sigma^{-1}\theta)\\\\
 $$
 Maximize MAE
 $$
-\theta_{MAE}=\arg\max_{\theta} P(\theta|\mathbf Y,\mathbf X)=\arg\max_{\theta} \log   P(\mathbf Y|\theta,\mathbf X)P(\theta)\\
+\theta_{MAE}=\arg\max_{\theta} P(\theta|\mathbf Y,\mathbf X)=\arg\max_{\theta} \log   P(\mathbf Y|\theta,\mathbf X)P(\theta)\\\\
 =\arg \min_{\theta} \sum_{i=1}^N\left (y^i-f(x^i;\theta)\right)^2+ \theta^T \Sigma^{-1}\theta
 $$
 
@@ -227,11 +228,12 @@ $$
 
 **证明**： 
 $$
-\mbox{Pr}[\exists  h \in \mathcal H :\hat  R(h)=0 ∧ R(h) > \epsilon ]\\=\sum_{h\in \mathcal H}\mbox{Pr}[ \hat R(h)=0 ∧ R(h) > \epsilon ]=\sum_{h\in \mathcal H}\mbox{Pr}[ \hat R(h)=0 |R(h) > \epsilon] \mbox{Pr}[R(h) > \epsilon]\\
-\leq \sum_{h\in \mathcal H}\mbox{Pr}[ \hat R(h)=0| R(h) > \epsilon ]\\
-\leq  \sum_{h\in \mathcal H}(1-\epsilon)^m=|\mathcal H|(1-\epsilon)^m\\
-\Rightarrow  1- \mbox{Pr}[\exists  h \in \mathcal H :\hat  R(h)=0 ∧ R(h) > \epsilon ]\geq  1-|\mathcal H|(1-\epsilon)^m\\
-\Rightarrow   \mbox{Pr}[\forall h \in \mathcal H :\hat  R(h)\neq 0 \vee  R(h) \leq \epsilon ]\geq  1-|\mathcal H|(1-\epsilon)^m\\
+\mbox{Pr}[\exists  h \in \mathcal H :\hat  R(h)=0 ∧ R(h) > \epsilon ]\\\\
+=\sum_{h\in \mathcal H}\mbox{Pr}[ \hat R(h)=0 ∧ R(h) > \epsilon ]=\sum_{h\in \mathcal H}\mbox{Pr}[ \hat R(h)=0 |R(h) > \epsilon] \mbox{Pr}[R(h) > \epsilon]\\\\
+\leq \sum_{h\in \mathcal H}\mbox{Pr}[ \hat R(h)=0| R(h) > \epsilon ]\\\\
+\leq  \sum_{h\in \mathcal H}(1-\epsilon)^m=|\mathcal H|(1-\epsilon)^m\\\\
+\Rightarrow  1- \mbox{Pr}[\exists  h \in \mathcal H :\hat  R(h)=0 ∧ R(h) > \epsilon ]\geq  1-|\mathcal H|(1-\epsilon)^m\\\\
+\Rightarrow   \mbox{Pr}[\forall h \in \mathcal H :\hat  R(h)\neq 0 \vee  R(h) \leq \epsilon ]\geq  1-|\mathcal H|(1-\epsilon)^m\\\\
 \Rightarrow \mbox{Pr}_{S\sim D}(R(h_S)\leq \epsilon)\geq 1-|\mathcal H|(1-\epsilon)^m
 $$
 
@@ -246,9 +248,9 @@ $$
 $$
 假设模型h的 经验误差  $$\hat{\mathbb E}(h)$$ , 泛化误差 $$\mathbb E(h)=\mathbb E[\hat{\mathbb E}(h)]$$ 
 $$
-\forall h\in \mathcal H:\\
-\mbox{Pr}(|\hat R(h)-R(h)|\geq \epsilon)\leq 2e^{-2m\epsilon^2}\\
-\Rightarrow \\
+\forall h\in \mathcal H:\\\\
+\mbox{Pr}(|\hat R(h)-R(h)|\geq \epsilon)\leq 2e^{-2m\epsilon^2}\\\\
+\Rightarrow \\\\
 \mbox{Pr}(|\hat R(h)-R(h)| \leq  \epsilon)= \left(1-\sum_{h\in\mathcal H}\mbox{Pr}(h:|\hat R(h)-R(h)|\geq \epsilon)\right)\geq 1-|\mathcal H|2e^{-2m\epsilon^2}
 $$
 

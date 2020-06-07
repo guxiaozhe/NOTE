@@ -173,14 +173,12 @@ $$
 
 — 训练数据的**i.i.d** 于分布D 
 
-— Data set  $S=(\mathbf X^{m\times d},\mathbf y)$, **m个**样本，d个feature
+— Data set  $=(\mathbf X^{m\times d},\mathbf y)$, **m个**样本，d个feature
 
 — 假设空间 hypothesis set H, where $\hat y=h(x)$
 
-—  泛华误差Generalization Error 
-$$
-R(h)=\mbox{P}_{x\sim D}(h(x)\neq y)=\mathbb E_{x\sim D}[\mathbf  1(\hat y\neq y)]
-$$
+—  泛华误差Generalization Error $R(h)=\mbox{P}_{x\sim D}(h(x)\neq y)=\mathbb E_{x\sim D}[\mathbf  1(\hat y\neq y)]$
+
 — 经验误差Empirical Error
 $$
 \hat R(h)=\frac{1}{m}\sum_{i=1}^m \mathbf  1{(h(x^i)\neq y)}\\\\

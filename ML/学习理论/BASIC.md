@@ -217,8 +217,7 @@ $$
 — $m\geq \frac{1}{\epsilon}(\log |\mathcal H|+\log \frac{1}{\delta})$,  那么以下成立
 $$
 P_{S\sim D}(R(h_S)\leq \epsilon)\geq 1-\delta\\\\
-\Rightarrow \\\\
-P_{S\sim D}\left(R(h_S)\leq \frac{1}{m}(\log |\mathcal H|+\log \frac{1}{\delta})\right)\geq 1-\delta
+\Rightarrow P_{S\sim D}\left( R(h_S)\leq \frac{1}{m}(\log |\mathcal H|+\log \frac{1}{\delta})\right )\geq 1-\delta
 $$
 
 **证明**： 

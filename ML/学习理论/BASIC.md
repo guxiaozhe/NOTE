@@ -151,11 +151,11 @@ $$
 
 Empirical Risk :
 $$
-ER(\hat f)=\sum_i^n e(\hat f(x^i),y^i)=\sum_i^n \int e(\hat f(x),y^i)   \underbrace{\delta_{x^i}(x)}_{考虑单独x^i一个点}
+ER(\hat f)=\sum_i^n e(\hat f(x^i),y^i)=\sum_i^n \int e(\hat f(x),y^i)   \underbrace{\delta_{x^i}(x)}\_{考虑单独x^i一个点}
 $$
 而VRM 对于任意样本，考虑它的领域的分布
 $$
-VR(\hat f)=\sum_i^n \int e(\hat f(x),y^i)   \underbrace{\delta_{x^i}(x)}_{考虑x^i邻域上的分布}
+VR(\hat f)=\sum_i^n \int e(\hat f(x),y^i)   \underbrace{\delta_{x^i}(x)}\_{考虑x^i邻域上的分布}
 $$
 
 
@@ -183,11 +183,11 @@ R(h)=\mbox{P}_{x\sim D}(h(x)\neq y)=\mathbb E_{x\sim D}[\mathbf  1_(\hat y\neq y
 $$
 — 经验误差Empirical Error
 $$
-\hat R(h)=\frac{1}{m}\sum_{i=1}^m \mathbf  1_{(h(x^i)\neq y)}\\
-\mbox{根据中心极限定理 }\\
+\hat R(h)=\frac{1}{m}\sum_{i=1}^m \mathbf  1_{(h(x^i)\neq y)}\\\\
+\mbox{根据中心极限定理 }\\\\
 
 \mathbb E_{x\sim D}[\hat R(h)]=\sum_{i=1}^m \mathbb E_{x^i\sim D}[\mathbf  1_{( h(x)\neq y)}]
-\\
+\\\\
 
 =R(h)\\
 $$

@@ -40,8 +40,6 @@
 >=(1-\alpha)H(q,p)+\alpha D_{KL}(\mu||p)\\\\=(1-\alpha)H(q,p)+\alpha H(\mu,p)
 >$$
 
-
-
 **KD损失函数**
 
 >$$
@@ -61,21 +59,25 @@ $$
 
 
 
+LS让output 的distribution 除了符合label外， 同时让output distribution 更uniform and soft,
+
+而KD是让output distribution 更soft同时，更接近teacher （teacher output本身比较soft）。 
+
+
+
 
 
 ### Virtual Teacher
 
 $$
-p^d(k)=\begin{cases}\alpha\mbox{ if }k=c\\\\
-(1-\alpha)/(K-1) \alpha\mbox{ otherwise }
+p^d(k)=\begin{cases}a\mbox{ if }k=c\\\\
+(1-a)/(K-1) \alpha\mbox{ otherwise }
 \\ \end{cases}\\\\
 LS: q'(k)=(1-\alpha)q(k)+\alpha/K\\\\
-VKD: q'(k)=\begin{cases}(1-\alpha)q(k)+\alpha^2 \mbox{ if }k=c\\\\
-(1-\alpha)q(k)+(1-\alpha)\alpha/(K-1) \alpha\mbox{ otherwise }
+VKD: q'(k)=\begin{cases}(1-\alpha)q(k)+\alpha a \mbox{ if }k=c\\\\
+(1-\alpha)q(k)+(1-a)/(K-1) \alpha\mbox{ otherwise }
 \\ \end{cases}\\\\
 $$
-
-
 
 
 

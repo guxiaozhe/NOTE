@@ -1,4 +1,4 @@
-#  学习方法
+#  分析
 
 
 
@@ -82,6 +82,28 @@ $$
 
 
 # 知识种类
+
+
+
+
+
+#  学习方式
+
+## CVPR 2020  Neural Networks Are More Productive Teachers Than Human Raters: Active Mixup for Data-Efficient Knowledge Distillation from a Blackbox Model
+
+
+
+### Overview
+
+针对少量无标签样本$X$ 情况。  论文采用mixup 先构造一个样本池， 用teacher 提供原始样本以及mixup的样本的标签。  首先在原始样本上预训练student。  然后每个循环中， 从mixup samples选取出一些 student model is most uncertian，i.e., $\max P(y|x) $ 比较小的。  因为mixup构造中涉及到$x^{i,j}=\lambda x^i+(1-\lambda )x^j$  ,  需要确保$\lambda$ 选取使得student  score $C(x_i,x_j)=\min_{\lambda} \max P(y|x^{i,j})$   来训练student.  经过多次迭代， student 会学习到越来越多的uncertian mixup samples 以此提高performance.
+
+
+
+相比于传统KD， 针对是数据不充足情况， 也并没有比较在样本充足情况下，是否比KD效果好。
+
+
+
+
 
 
 

@@ -81,7 +81,50 @@ $$
 
 
 
-# 知识种类
+# 蒸馏方式
+
+## 2020 CVPR: The Knowledge Within: Methods for Data-Free Model Compression
+
+### Overview
+
+针对情景是**在不接触原始数据情况下**， 用一个full precision teacher来生成人造样本帮助fine tune/calibrate一个量化的student。 主要是先用teacher 包含的知识来生成synthetic样本来帮助被压缩的模型精力减少performance 损失。 同时提出利用BN层的统计数据在不使用原始数据情况下， 估算数据集之间的相似度。
+
+
+
+### 生成样本方法
+
+
+
+> **Gaussian scheme** ： 随机高斯采样,   然后在训练中需要冻结student BN层 来防止BN出现大的偏差
+
+> **Inception scheme:**： 最大化teacher output logit， 
+
+
+>**BN-Statistics scheme:**   前两种方法容易导致生成数据和真实数据的internal statistics’ divergence， >所以可能会损害性能。 因此提出了BN-Stat， i.e., 直接较小生成数据与BN 统计信息之间的divergence
+>
+>
+>
+>* 损失函数：  给定BN Stats:   $\hat \mu, \hat \sigma $,    生成样本BN Stats $\tilde \mu(D), \tilde \sigma(D)$
+>
+>$$
+>BNS(D,\hat \mu, \hat \sigma )=D_{KL}(\mathcal N(\hat \mu, \hat \sigma )||\mathcal N(\tilde \mu(D), \tilde \sigma(D)))\\
+>=\log \frac{\tilde \sigma}{\hat \sigma}-0.5(1-\frac{\hat \sigma^2+(\hat\mu-\tilde \mu)^2}{\tilde \sigma^2})
+>$$
+>
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

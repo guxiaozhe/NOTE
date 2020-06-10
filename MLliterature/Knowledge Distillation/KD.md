@@ -150,3 +150,21 @@ $$
 
 
 
+## CVPR 2020:  Highlight Every Step: Knowledge Distillation via Collaborative Teaching
+
+### Overview
+
+采用了两个teacher。 其中一个teacher 是和student 一起step by step 的训练， 并用当前的输出让student 模仿teacher 训练中的每一步状态。另一个teacher类似于attention KD 提供sample的attention map 让学生模仿。
+
+
+
+实验数据表明显示这种协同训练有少量提升，但是发现作为baseline KD 本身的结果非常差。 怀疑是否也只是在当前实验设定下才work。
+
+
+
+
+
+### Overview 
+
+
+

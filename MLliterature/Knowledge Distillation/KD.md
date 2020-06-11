@@ -148,8 +148,6 @@ $$
 
 
 
-
-
 ## CVPR 2020:  Highlight Every Step: Knowledge Distillation via Collaborative Teaching
 
 ### Overview
@@ -164,7 +162,14 @@ $$
 
 
 
-### Overview 
 
 
 
+
+## AAAI2019: Rocket Launching: A Universal and Efficient Framework for Training Well-performing Light Net
+
+### Overview
+
+基本思路是teacher 模型和student 模型共享前几层的网络参数， 然后同时用label训练teacher 和student 并保持teacher 与student之间的logits 比较相似。
+
+从实验结果看对WRN， 对比原始KD有一定提升，但是这时候KD本身效果极差， 相信因该也是特殊实验设定的结果。

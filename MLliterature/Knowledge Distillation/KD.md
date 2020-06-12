@@ -117,14 +117,98 @@ $$
 
 
 
+## CVPR 2020 : Regularizing Class-wise Predictions via Self-knowledge Distillation
+
+### Overview 
+
+主要想法就是减少同个label的不同sample之间output distribution差异。 那么不管对于correct or misclassified sample， 它们之间的差异都是相似的。 Regularization loss也简单， sample 两组有**相同label的样本**， 然后想KD一样减少它们**soft output KL散度**。 最后还添加了一项原始样本x与曾广样本x’的soft输出之间的KL散度
+
+
+
+PS：motivation是不是成立，i.e.,强制同个label的不同样本之间的输出分布相同是不是成立。 和KD本身比并没有优势。
+
+##  CVPR 2020:  Heterogeneous Knowledge Distillation using Information Flow Modeling
+
+### Overview
+
+主要考虑解决两个问题1） student在训练的不同阶段 需要不同的老师 2）利用中间层的KD通常无法应对不同结构的teacher and student，需要block之间的1-to-1match。
+
+为了解决问题， student and teacher 的某层输出与label之间的互相学习MI 作为蒸馏目标  ，这样的好处是1）不必考虑网络结构的不同 与2）**避免了over-regularization**
+
+
+
+### Formulation
+
+* $g^l(x)$:   表示student layer l输出
+
+* $f^l(x)$ :  teacher layer l输出
+
+* $I(g^l/f^l,Y)$  ：l层输出与目标变量互信息
+
+* $\mathbf  w_t=[I(f^1,Y)....I(f^{L_T},Y)]$ :  teacher 的互信息向量
+
+* $\mathbf  w_s=[I(g^1,Y)....I(g^{L_S},Y)]$：student 互信息向量
+
+  
+
+>  **蒸馏Loss**
+> $$
+> \sum_{l=1}^{L_S} (\mathbf w_s[l]-\mathbf w_t[*])^2\\
+> $$
+> 这里* 表示$\arg\min_k (\mathbf w_s[l]-\mathbf w_t[k])^2$。  因此teacher 的某一层可能汇合student 的多个层匹配，而某些层的信息可能又全用不上。 同时如何选择不同的layer 匹配又会影响性能。
 
 
 
 
 
 
+> **Quadratic Mutual Information**  来用来计算MI： 
+>
+>  student’s conditional probability distribution 定义如下， teacher 也类似。
+>
+> 
+> $$
+> p_{i|j}^{(s,l)}=\frac{K(g^l(x_i),g^l(x_j))}{\sum_{i\neq j}^N K(g^l(x_i),g^l(x_j))}
+> $$
+> 其中K是一个kernel function。那么student /teacher 的layer-wise MI 用 Jeffreys divergence 计算, 
+> $$
+> \mathcal L^{(l_t,l_s)}=\mathcal D(\mathcal P^{t,l_t}||\mathcal P^{s,l_s})=\sum_{i,j\neq i}(p_{i|j}^{(t,l_t)}-p_{i|j}^{(s,l_s)})(\log p_{i|j}^{(t,l_t)}-\log p_{i|j}^{(s,l_s)})\\\\
+> =D_{KL}(p_{i|j}^{(t,l_t)}||p_{i|j}^{(s,l_s)})-D_{KL}(p_{i|j}^{(s,l_s)}||p_{i|j}^{(t,l_t)})
+> $$
+> 
+>
+> 
 
 
+> **辅助网络** ： 为了解决层与层的匹配问题，使用一个与student结构类似（同样的层数，但是更宽）的辅助网络。 
+>
+> 先用传统的KD，来训练辅助网络，然后再用MI 的divergence来训练student
+> $$
+> \mathcal L=\alpha_i \mathcal D(\mathcal P^{t,l_i}||\mathcal P^{s,l_i})
+> $$
+>
+> 
+
+
+
+>**Critical Period-aware 蒸馏**  ：主要是针对不同epoch ， student处于不同状态。 比如刚初始化时候，网络的可塑性强，后来就变弱了。本文采取的策略就是在更重要时期，给与更高的权重$\alpha_i$
+>$$
+>\alpha_i=\begin{cases}
+>1& \mbox{ if } i=L_S\\\\
+>\alpha_{initial}\times \gamma^k&\mbox{ otherwise}
+>\end{cases}
+>$$
+>
+>
+>其中 k表示训练的epoch，$\gamma$是一个衰减系数
+>
+>
+
+
+
+
+
+PS: 实验中的student采用了一个很简单的3层卷积结构。 然后对KD的超参数设计 为0.1和 T=2 也不是大多数论文里的比较优解。 
 
 
 
@@ -142,7 +226,9 @@ $$
 
 
 
-相比于传统KD， 针对是数据不充足情况， 也并没有比较在样本充足情况下，是否比KD效果好。
+PS: 相比于传统KD， 针对是数据不充足情况， 也并没有比较在样本充足情况下，是否比KD效果好。
+
+
 
 
 
@@ -164,12 +250,25 @@ $$
 
 
 
+## CVPR 2020:  Few Sample Knowledge Distillation for Efficient Network Compression
+
+### Overview
+
+首先是从一个预训练teacher 模型prune一个student 模型，并保证他们在各个block上的feature map size一致。  然后在student模型对应teacher的block上添加1x1的卷积，来匹配student-teacher 的block输出。最后把这个1x1卷积merge到前面的卷积层里， 因为1x1 conv相当于feature map 的线性组合， 所以也是可以实现的。  最后在block wise 的student /teacher 拟合中， 是逐层进行的，即先用样本 对第一个block输出拟合，然后对第二层，依次类推。
 
 
-## AAAI2019: Rocket Launching: A Universal and Efficient Framework for Training Well-performing Light Net
+
+
+
+## AAAI  2019: Rocket Launching: A Universal and Efficient Framework for Training Well-performing Light Net
 
 ### Overview
 
 基本思路是teacher 模型和student 模型共享前几层的网络参数， 然后同时用label训练teacher 和student 并保持teacher 与student之间的logits 比较相似。
 
 从实验结果看对WRN， 对比原始KD有一定提升，但是这时候KD本身效果极差， 相信因该也是特殊实验设定的结果。
+
+
+
+
+

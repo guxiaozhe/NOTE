@@ -258,6 +258,14 @@ PS: 相比于传统KD， 针对是数据不充足情况， 也并没有比较在
 
 
 
+## CVPR 2020:  Search to Distill: Pearls are Everywhere but not the Eyes
+
+### Overview
+
+从不同结构teacher适合不同结构的student角度（因为teacher的结构性知识 是不能传递给student的），来搜索适合的student 结构。给定teacher, 用RNN 的强化学习来在predefined 结构用KD 知道的accuracy作为reward搜索适合的结构。
+
+
+
 
 
 ## AAAI  2019: Rocket Launching: A Universal and Efficient Framework for Training Well-performing Light Net

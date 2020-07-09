@@ -79,6 +79,67 @@ VKD: q'(k)=\begin{cases}(1-\alpha)q(k)+\alpha a \mbox{ if }k=c\\\\
 \\ \end{cases}\\\\
 $$
 
+##  2020  On the Demystification of Knowledge Distillation: A Residual Network Perspective 
+
+### Overview
+
+根据 即使很烂的teacher 也能指导student的事实， 说明teacher 其实并不是单纯起着指导的作用，我们对它为什么work还是不清楚啊。因而我们也不知道是什么样才是好老师，什么才是好学生。事实上，学生的好坏 和教师本身无关了。
+
+
+
+因而作者提出了个**很有趣的假设**（和我们之前的猜想很像）
+
+>教师并不是在传到自己的结构性知识之类， 而是在训练中，帮助学生到达一个更加优秀的初始化， 然后student 在一个 a well-behaved  non-chaotic  region of loss-landscape  收敛。
+
+**这点其实和NAS里的lucky ticket非常像： 给定初始化，需要一个lucky ticket 结构。  给定一个结构，需要一个lucky ticket initialization**
+
+猜想如果正确： 那么是不是在几个epoch后，我们完全可以直接用hard label来训练？ 
+
+>衍生的假设：
+>
+>* 正则化的student 从老师这边收益更多，除非是当老师也是高度正则化
+>* 当老师高度正则化（说明老师给与学生的hint是比较speciliazed的）， 那么student表达能力高的更适应这种hint，收益效果更高。
+>
+>理解： 老师的hint 可能并不是适合学生的。 特别是比较特殊的hint。 当然，即**使没有正则化的老师的hint，在两者之间差异过大时候。也不一定能帮助学生。** ： 比如（有实验）resnet8 的resnet18,20,26老师中最适合它的是26， 但是换成wideresnet，即使没有regulization， 它的效果也差。
+>
+>* 从loss-landscape and feature reuse，  KD可以代替residual connection for 浅层网络。
+>
+>
+
+
+
+**实验发现**：
+
+>选用了Resnet 作为teacher, 然后把skip connetion remove掉的结构作为student.
+>
+>对于浅层的网络， KD能很好恢复性能 ，甚至超越，。
+>
+>随着层数变深，虽然学生网络本身性能提升， 但是KD效果却减弱了。
+>
+>**Loss landscape viewpoint** 
+>
+>随着网络深度提高，它的loss surface 变得更加chaotic , 而导致趋向于local minima，并且梯度也变得更加不稳定。 而Residual connections能防止这个问题。
+>
+>一个更好的初始化，能一定程度上也能解决这个问题。但是 对于过度chaotic surface， 即使一个好的初始化，可能也不行。
+
+
+
+### Interesting Points
+
+**Knowledge  and  Experience of A Network**:
+
+>一个网络=解决一个问题， 它的每一层相当于解决问题的一个步骤，所以一个网络的Knowledge 是 quite structural的。 对于一个更深的网络，它学到的表征是更高层次，所以表达能力更强。 对于更宽的网络，它更容易倾向于记忆。 
+>
+>对于一个宽的网络加上regularization， 相当于让网络有更多experience 在解决这个问题上（比如data augmentation)，所以experience是unstructual的。 有更多experience的网络，可以更好泛华，学到问题本质而不是记忆。
+
+
+
+
+
+
+
+
+
 
 
 # 蒸馏方式
@@ -228,9 +289,17 @@ PS: 实验中的student采用了一个很简单的3层卷积结构。 然后对K
 
 PS: 相比于传统KD， 针对是数据不充足情况， 也并没有比较在样本充足情况下，是否比KD效果好。
 
+##Dreaming to Distill: Data-Free Knowledge Transfer via DeepInversion
 
-
-
+本文提出了一个用一个teacher 模型（考虑到pretrained teacher knowledge 包含了natural image set 的先验知识）来生成数据帮助训练student网络。为什么生成的数据要符合natural image prior : 防止student 在非天然数据是过度拟合。 然后本文首先提出了利用teacher BN 层的统计信息($\mu_l,\sigma_l$)，保证生成的数据尽量符合原始分布 (PS:这里优化目标是初始化为随机噪声的input)
+$$
+\mathcal R_{feature}(\hat x)=\sum_l ||(\mu_l(\hat x))-\mu_l||_2^2+\sum_l ||\sigma_l^2(\hat x)-\sigma_l^2||\\\hat x=\min L(\hat x,y)+\mathcal R_{feature}(\hat x)
+$$
+此外为了保证生成的数据多样性（而不是teacher 模型本身见到的那些数据）， 在损失函数中增加了teacher 与student 输出的 JS 散度
+$$
+\hat x=\min L(\hat x,y)+\mathcal R_{feature}(\hat x)-JS(p^S(\hat x),p^T(\hat x))
+$$
+![Screenshot 2020-06-18 at 10.31.16 AM](KD.assets/Screenshot%202020-06-18%20at%2010.31.16%20AM.png)
 
 
 
@@ -260,9 +329,9 @@ PS: 相比于传统KD， 针对是数据不充足情况， 也并没有比较在
 
 ## CVPR 2020:  Search to Distill: Pearls are Everywhere but not the Eyes
 
-### Overview
 
-从不同结构teacher适合不同结构的student角度（因为teacher的结构性知识 是不能传递给student的），来搜索适合的student 结构。给定teacher, 用RNN 的强化学习来在predefined 结构用KD 知道的accuracy作为reward搜索适合的结构。
+
+解决了不同结构teacher适合不同结构的student的问题。 通常teacher的结构性知识 是不能传递给student的，而且student 在不同的teacher 下performance是不同的， 而不是最优的teacher一定会训练出最优的student。 一个类比就是curve fitting里 我们需要选择不同的function family来适应不同的data。 因而给定teacher需要来搜索适合的student 结构。 主要的贡献是提出用强化学习来在predefined 结构用KD 训练指导的accuracy作为reward搜索适合的结构。
 
 
 

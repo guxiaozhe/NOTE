@@ -1,3 +1,31 @@
+
+
+# 2020 CVPR Deep Representation Learning on Long-tailed Data: A Learnable Embedding Augmentation Perspective
+
+##  Overview
+
+主要是解决不同class样本分布不均匀的问题。 从实验的 t-SNE feature visulization可以观察到对于数目比较多的head class 样本在feature space分布更广， 当减少这些class的样本，它们的分布就narrow了，或者说确实intra-class diversity。 
+
+
+
+假设我们有不同class样本在feature space 的class center， 那么head class样本与class center之间的夹角的分布会更加广， 方差更大。 目标就是对tail class样本， 对它增加噪声分布， 让它与class center 夹角的分布的方差 更加接近于head class distribution。
+
+
+
+#  2020 CVPR :   Augment Your Batch: Improving Generalization Through Instance Repetition
+
+
+
+##  Overview
+
+主要是针对增大batch size能加速训练速度，但是却降低了繁华性。所以一般需要用fine-tuning 学习率，每层的学习率，optimization step等解决。通常会用更大的学习率来减少 大batch size 带来的low gradient varince影响。
+
+
+
+本文主要针对控制 gradient variance 在更大的batch size 下。然后主要核心是对batch里每个image 给与不同的augment transformation。
+
+
+
 #  2020 ICLR- AUGMIX: "A SIMPLE DATA PROCESSING METHOD TO IMPROVE ROBUSTNESS AND UNCERTAINTY"
 
 ##  Overview
@@ -29,7 +57,7 @@
 
 ## Overview
 
-随机把另一个图像的patch 覆盖的当前图像。主要解决随机擦除方法里 单幅图片的信息量是减少的问题。
+随机把另一个图像的patch 覆盖的当前图像。主要解决随机擦除方法里 单幅图片的信息量是减少的问题。 然后cut的面积占比=label的权重$\lambda$  成正比。
 
 
 

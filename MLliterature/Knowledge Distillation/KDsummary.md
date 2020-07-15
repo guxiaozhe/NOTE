@@ -1,24 +1,24 @@
-#SOTA
+#   SOTA
 
-##One-Stage KD
+##  One-Stage KD
 
 | 缩写                 | Loss                                                         | 描述                                                         |
 | -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| KD 、HKD     NIPS 15 | $\mathcal L_{KD}=(1-\alpha) H(q,p^S)+\alpha D_{KL}(p^T_{\tau}||p_{\tau}^S)$ | Baseline KD                                                  |
-| AT        ICLR 2017  | $\mathcal L_{AT}=\mathcal L_{KD}+\beta\sum_{j}||A_j^S-A_j^T||_p$ | 模仿教师中间层的激活图 attention KD                          |
+| KD 、HKD     NIPS 15 | $$\mathcal L_{KD}=(1-\alpha) H(q,p^S)+\alpha D_{KL}(p^T_{\tau}||p_{\tau}^S)$$ | Baseline KD                                                  |
+| AT        ICLR 2017  | $$\mathcal L_{AT}=\mathcal L_{KD}+\beta\sum_{j}||A_j^S-A_j^T||_p$$ | 模仿教师中间层的激活图 attention KD                          |
 | BSS     AAAI 2019    | $$\mathcal L_{BSS}=\mathcal L_{KD}+\beta \sum_i\sum_k P_n^k\times \mathcal D_{KL}(p^T_{\tau}(k),p^S_{\tau}(k)) \\\\P_n^k=q^T(k)/(1-\max q^T(k’))\\\\:\text{probability of class k being selected as the target class}$$ | 生成靠近决策边界的样本(Boundary Supporting Samples)来帮助训练 |
-| SP       ICCV 2019   | $\mathcal L_{SP}=\mathcal L_{CE}+1/{n_{batch}^2}\sum_{l,l’}||G^T_l,G^S_{l’}||_F^2\\\\G_l\text{: batch 内不同样本feature vector的內积矩阵作为相似度衡量}$ | Similarity Preserving :保留两个样本之间相似性                |
-| RKD CVPR 2019        | $\mathcal L_{RKD}=\mathcal L_{CE}+\beta ||rela(\mathbf f_i^T, \mathbf f_j^T))-rela(\mathbf f_i^S,\mathbf f_j^S))||$ | 用batch 内两个样本feature vector 的距离$d(\mathbf f_i,\mathbf f_j)$， 或者三个样本间的cosine $\cos (\mathbf f_i-\mathbf f_k, \mathbf f_j- \mathbf f_k)$ 衡量相似度 |
-| OH  ICCV 2019        | $\mathcal L_{OH}=\mathcal L_{CE}+\alpha d(\sigma_m(\mathbf f^T), reg(\mathbf f^S))$ | feature distillation升级版，提出了特殊的激活函数保留了一定量的negative 信息（不想relu所有negative 信息=0），防止了信息的丢失。 |
+| SP       ICCV 2019   | $$\mathcal L_{SP}=\mathcal L_{CE}+1/{n_{batch}^2}\sum_{l,l’}||G^T_l,G^S_{l’}||_F^2\\\\G_l\text{: batch 内不同样本feature vector的內积矩阵作为相似度衡量}$$ | Similarity Preserving :保留两个样本之间相似性                |
+| RKD CVPR 2019        | $$\mathcal L_{RKD}=\mathcal L_{CE}+\beta ||rela(\mathbf f_i^T, \mathbf f_j^T))-rela(\mathbf f_i^S,\mathbf f_j^S))||$$ | 用batch 内两个样本feature vector 的距离$d(\mathbf f_i,\mathbf f_j)$， 或者三个样本间的cosine $\cos (\mathbf f_i-\mathbf f_k, \mathbf f_j- \mathbf f_k)$ 衡量相似度 |
+| OH  ICCV 2019        | $$\mathcal L_{OH}=\mathcal L_{CE}+\alpha d(\sigma_m(\mathbf f^T), reg(\mathbf f^S))$$ | feature distillation升级版，提出了特殊的激活函数保留了一定量的negative 信息（不想relu所有negative 信息=0），防止了信息的丢失。 |
 |                      |                                                              |                                                              |
 
 ##Multi-Stage KD
 
 |                       | Stage 1                                                      | Stage 2           | 描述                                                         |
 | --------------------- | ------------------------------------------------------------ | ----------------- | ------------------------------------------------------------ |
-| FitNet      ICLR 2015 | $\mathcal L_{hint}=||\mathbf f_{hint}^T(\mathbf x)-reg(\mathbf f_{guide}^S(\mathbf x))||^2$ | $\mathcal L_{KD}$ | 选一对layer                                                  |
-| FSP  CVPR 2017        | $\mathcal L_{FSP}=\sum_{\mathcal I \in pair} ||G_{\mathcal I}^T-G_{\mathcal I}^T||,\\\\G_{\mathcal I}:\text{ inner product of two feature map} $ | CE                | 两个layer 內积（flow of solution）作为知识                   |
-| AB    AAAI   2019     | $\mathcal L_{AB}= (\mathbf f^T>0)-\mathbf (f^S>0)\\\\\text{对于卷积网络，则按照每个pixel 对应的feature vector}$ | CE                | 保证teacher 激活的neuron, student 也激活，但是不考虑激活强度 |
+| FitNet      ICLR 2015 | $$\mathcal L_{hint}=||\mathbf f_{hint}^T(\mathbf x)-reg(\mathbf f_{guide}^S(\mathbf x))||^2$$ | $\mathcal L_{KD}$ | 选一对layer                                                  |
+| FSP  CVPR 2017        | $$\mathcal L_{FSP}=\sum_{\mathcal I \in pair} ||G_{\mathcal I}^T-G_{\mathcal I}^T||,\\\\G_{\mathcal I}:\text{ inner product of two feature map} $$ | CE                | 两个layer 內积（flow of solution）作为知识                   |
+| AB    AAAI   2019     | $$\mathcal L_{AB}= (\mathbf f^T>0)-\mathbf (f^S>0)\\\\\text{对于卷积网络，则按照每个pixel 对应的feature vector}$$ | CE                | 保证teacher 激活的neuron, student 也激活，但是不考虑激活强度 |
 |                       |                                                              |                   |                                                              |
 
 ##学习方式 
@@ -27,10 +27,10 @@
 
 | 缩写           | Loss                                                         | 描述                                                         |
 | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| MKD  CVPR 2018 | $\mathcal L_{net1}: \mathcal L_{CE}+\mathcal D_{KL}(p_2||p_1)\\\\\mathcal L_{net2}: \mathcal L_{CE}+\mathcal D_{KL}(p_1||p_2)$ | 两个网络 相互mutual学习                                      |
-| ONE  NIPS 2018 | $\mathcal L_{one}=\sum_i^m \mathcal L_{CE}(i)+L_{KD}(i)+\mathcal L_{CE}(ensemble)$ | 构造一个特殊的网络， 共享浅层特征提取，然后分支多个子网络。把子网络的集成作为老师。 同时 不同子网络的权值 是可学习的。 |
-| TAKD AAAI 2020 | $\mathcal L_{neti}=\mathcal L_{KD}(net_{i-1})$               | 不断缩小老师大小来适应学生                                   |
-| KDCL CVPR 2020 | $\mathcal L_{DKCL}=\sum_i \mathcal L_{CE}(net_i)+\mathcal L_{KD}(i)\\\\ \mathbf z^T=h(\mathbf z^T_1,...\mathbf z^T_m)$ | 训练m个模型，并用集成logits作为teacher。 集成的方式可以是 比如最小误差的model, 子模型输出的线性组合啊 |
+| MKD  CVPR 2018 | $$\mathcal L_{net1}: \mathcal L_{CE}+\mathcal D_{KL}(p_2||p_1)\\\\\mathcal L_{net2}: \mathcal L_{CE}+\mathcal D_{KL}(p_1||p_2)$$ | 两个网络 相互mutual学习                                      |
+| ONE  NIPS 2018 | $$\mathcal L_{one}=\sum_i^m \mathcal L_{CE}(i)+L_{KD}(i)+\mathcal L_{CE}(ensemble)$$ | 构造一个特殊的网络， 共享浅层特征提取，然后分支多个子网络。把子网络的集成作为老师。 同时 不同子网络的权值 是可学习的。 |
+| TAKD AAAI 2020 | $$\mathcal L_{neti}=\mathcal L_{KD}(net_{i-1})$$             | 不断缩小老师大小来适应学生                                   |
+| KDCL CVPR 2020 | $$\mathcal L_{DKCL}=\sum_i \mathcal L_{CE}(net_i)+\mathcal L_{KD}(i)\\\\ \mathbf z^T=h(\mathbf z^T_1,...\mathbf z^T_m)$$ | 训练m个模型，并用集成logits作为teacher。 集成的方式可以是 比如最小误差的model, 子模型输出的线性组合啊 |
 
 ## 结果
 

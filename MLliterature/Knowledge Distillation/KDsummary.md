@@ -4,8 +4,8 @@
 
 | 缩写                 | Loss                                                         | 描述                                                         |
 | -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| KD 、HKD     NIPS 15 | $$\mathcal L_{KD}=(1-\alpha) H(q,p^S)+\alpha D_{KL}(p^T_{\tau}||p^S_{\tau})\\\\$$ |                                                              |
-| AT        ICLR 2017  | $$\mathcal L_{AT}=\mathcal L_{KD}+\beta\sum_{j}||A^T_j-A^S_j||\\\\$$ |                                                              |
+| KD 、HKD     NIPS 15 | $\mathcal L_{KD}=(1-\alpha) H(q,p^S)+\alpha D_{KL}(p^T_{\tau}||p^S_{\tau})$ |                                                              |
+| AT        ICLR 2017  | $\mathcal L_{AT}=\mathcal L_{KD}+\beta\sum_{j}||A^T_j-A^S_j||$ |                                                              |
 | BSS     AAAI 2019    | $$\mathcal L_{BSS}=\mathcal L_{KD}+\beta \sum_i\sum_k P_n^k\times \mathcal D_{KL}(p^T_{\tau}(k),p^S_{\tau}(k)) \\\\P_n^k=q^T(k)/(1-\max q^T(k’))\\\\:\text{probability of class k being selected as the target class}$$ | 生成靠近决策边界的样本(Boundary Supporting Samples)来帮助训练 |
 | SP       ICCV 2019   | $$\mathcal L_{SP}=\mathcal L_{CE}+1/{n_{batch}^2}\sum_{l,l’}||G^T_l,G^S_{l’}||_F^2\\\\G_l\text{: batch 内不同样本feature vector的內积矩阵作为相似度衡量}$$ | Similarity Preserving :保留两个样本之间相似性                |
 | RKD CVPR 2019        | $$\mathcal L_{RKD}=\mathcal L_{CE}+\beta ||rela(\mathbf f_i^T, \mathbf f_j^T))-rela(\mathbf f_i^S,\mathbf f_j^S))||\\\\$$ | 用batch 内两个样本feature vector 的距离$d(\mathbf f_i,\mathbf f_j)$， 或者三个样本间的cosine $\cos (\mathbf f_i-\mathbf f_k, \mathbf f_j- \mathbf f_k)$ 衡量相似度 |

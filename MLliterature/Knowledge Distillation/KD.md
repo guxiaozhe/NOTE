@@ -1,8 +1,10 @@
+
+
+
+
 #  分析
 
-
-
-## 2020 CVPR:    REVISIT KNOWLEDGE DISTILLATION: A TEACHERFREE FRAMEWORK
+##  CVPR 2020:    REVISIT KNOWLEDGE DISTILLATION: A TEACHERFREE FRAMEWORK
 
 ### Overview
 
@@ -79,7 +81,7 @@ VKD: q'(k)=\begin{cases}(1-\alpha)q(k)+\alpha a \mbox{ if }k=c\\\\
 \\ \end{cases}\\\\
 $$
 
-##  2020  On the Demystification of Knowledge Distillation: A Residual Network Perspective 
+##   CVPR 2020  On the Demystification of Knowledge Distillation: A Residual Network Perspective 
 
 ### Overview
 
@@ -144,7 +146,32 @@ $$
 
 # 蒸馏方式
 
-## 2020 CVPR: The Knowledge Within: Methods for Data-Free Model Compression
+
+
+## CVPR 2020 : Online Knowledge Distillation via Collaborative Learning
+
+
+
+### Overview
+
+同时训练多个子网络，并用他们的集成输出$\mathbf z^T=h(\mathbf z_1,..,\mathbf z_m)$  作为老师指导每个子模型
+$$
+\mathcal L_{KDCL}=\sum_i\mathcal L_{CE}^i+\mathcal L_{KD}^i(\sigma(\mathbf z_i),\sigma(\mathbf z^T))
+$$
+所以问题关键h选择：
+
+1. Naive: $\mathbf z^T=\arg \min_{\mathbf z_i} \mathcal L_{CE}^i$
+2. Linear:  直接优化 各个子模型的权重， 得到$\min \mathcal L_{CE}(\sigma(\mathbf z^T),\mathbf y),\mathbf z^T=\sum_i \alpha_i \mathbf z_i$
+3. min Logit: $\mathbf z'=\mathbf z-z^c$ 表示减去target logit后值，  $\mathbf z^T_j=\min_i \mathbf z_{i,j}’$
+4. 
+
+
+
+
+
+
+
+##  CVPR 2020: The Knowledge Within: Methods for Data-Free Model Compression
 
 ### Overview
 
@@ -269,9 +296,195 @@ PS：motivation是不是成立，i.e.,强制同个label的不同样本之间的�
 
 
 
-PS: 实验中的student采用了一个很简单的3层卷积结构。 然后对KD的超参数设计 为0.1和 T=2 也不是大多数论文里的比较优解。 
+**PS: 实验中的student采用了一个很简单的3层卷积结构。 然后对KD的超参数设计 为0.1和 T=2 也不是大多数论文里的比较优解。** 
 
 
+
+
+
+## AAAI 2020: Improved knowledge distillation via teacher assistant: Bridging the gap between student and teacher
+
+
+
+**Motivation** :  teacher size -学生size必须小于一定程度，学生才能模仿
+
+* Experiments that show surprisingly a student model distilled from a teacher with **more parameters and better accuracy performs worse than the same one distilled from a smaller teacher with a smaller capacity.**
+
+
+
+* Teacher assistant 到底是什么？ ： 比如最开始的teacher size 是8， 那么TA size=4， 再小就训练不了，最后再student size 2 去模仿TA
+* Observation: 中间TA数量越多越好
+
+
+
+
+
+**理论分析**
+
+需要理解VC theory [Vapnik, V. Statistical learning theory. 1998, volume 3. Wiley, New York, 1998.] 
+
+和论文
+
+Lopez-Paz, D., Bottou, L., Scholkopf, B., and Vapnik, V. ¨ Unifying distillation and privileged information. arXiv preprint arXiv:1511.03643, 2015.
+
+
+
+##  AAAI  2019: Knowledge Distillation with Adversarial Samples Supporting Decision Boundary
+
+### Overview
+
+**Motivation**:  靠近decison boundary 的样本对模型的影响更大。 所以找到这些decision boundary supporting samples BSS 用来帮助训练学生或许有用。
+
+
+
+**如何找到 Boundary supporting sample (BSS)**  ： 
+
+* 样本$\mathbf x$ 属于base class b 
+
+* 相对于class k 的一个adversarial 样本$\mathbf x^k_0=\mathbf x$, 经过i 轮迭代 变成$\mathbf x_i^k$
+
+* $f_b$  and $f_k$  ：  classification scores for the base class and the target class k
+
+* adversarial attack 目标： 降低base class评分，提高class k评分
+  $$
+  \min L_k(\mathbf x)=f_b(\mathbf x)-f_k(\mathbf x)\\
+  \Rightarrow \mathbf x_{i+1}^k= \mathbf x_{i}^k-\eta(L_k( \mathbf x_{i}^k)+\epsilon)\frac{\nabla L_k( \mathbf x_{i}^k)}{||\nabla L_k( \mathbf x_{i}^k)||_2}
+  $$
+
+
+
+**如何使用BSS**
+
+给定一组BSSs $\mathbf x_i^k,i\in\{1,..n\},k\in{1,...C}$  
+$$
+\mathcal L_{BSS}=\mathcal L_{KD}+\beta \sum_i\sum_k P_n^k\times \mathcal D_{KL}(p^T_{\tau}(k),p^S_{\tau}(k)) \\\\
+P_n^k=q^T(k)/(1-\max q^T(k')):\text{probability of class k being selected as the target class}
+$$
+
+
+
+
+##  ICCV 2019:  A Comprehensive Overhaul of Feature Distillation
+
+### Overview
+
+在pair-wise feature distillation时候， teacher 和student 的feature通常是通过一个transformer比较的， 这样可以避免过度正则化， 也能解决size不同问题
+$$
+\min distance(T^T(\mathbf f^T),T^S(\mathbf f^S))
+$$
+
+
+比如  AB-Distillation 就是用一个0 or 1函数表示neuron 激活， AT-distillation用激活图。 这样的缺点是造成信息丢失。 
+
+
+
+**贡献**：
+
+* 使用激活函数Relu之前的输出作为知识蒸馏
+
+* 提出了margin ReLU,  $\sigma_m=\max(x,m),m<0$  作为teacher transformer
+
+  
+
+**最终loss**
+$$
+\mathcal L_{OH}=\mathcal L_{CE}+\alpha d(\sigma_m(\mathbf f^T), reg(\mathbf f^S))
+$$
+
+
+
+
+
+
+## ICCV 2019：Similarity-Preserving Knowledge Distillation
+
+**Motivation**：
+
+
+
+
+
+在teacher 里产生similar activation 的样本，在student 里， 也会产生相似的激活。
+
+**Formulation**
+
+* Activation Map of teacher   at layer l : $A_T^l\in \mathbb R^{b\times c\times h\times w}$  
+
+  * b是batch size
+
+*  Student model  activation map在相对应的layer l’ $A_S^{l’}\in \mathbb R^{b\times c’\times h'\times w'}$
+
+   
+
+* $Q_T^l\in \mathbb R^{b\times chw} $ :  把A 展开来
+
+* $\bar{G}_T^l= Q_T^l Q_T^{l ~T}\in \mathbb R^{b\times b}$
+  $$
+  \overbrace{G_T^l[i:]}^{ith~row}=\bar G_T^l[i:]/||G_T^l[i:]||_2^2
+  $$
+
+
+  表明各个样本的相关系数
+
+Loss Function :
+$$
+\frac{1}{b^2} \sum_{(l,l')\in I} ||G_T^l-G_S^{L'}||_F^2
+$$
+
+##CVPR 2019:  Relational Knowledge Distillation.
+
+
+
+* Knowledge type : minibatch 内部的sample 之间关系作为匹配对象
+
+  * distance based relation 
+    $$
+    \psi(x_i,x_j)=\frac{||\mathbf f_i-\mathbf f_j||_2}{\mu}\\
+    \mu=\frac{\sum_{i,j}||\mathbf f_i-\mathbf f_i||_2}{N^2}
+    $$
+
+  * Angle based relation: **任意3个样本之间**的夹角
+    $$
+    \psi(\mathbf f_i,\mathbf f_j,\mathbf  f_k)=cos(\mathbf f_i-\mathbf f_j,\mathbf f_k-\mathbf f_j)
+    $$
+
+
+
+## CVPR 2017：A Gift from Knowledge Distillation: Fast Optimization, Network Minimization and Transfer Learning
+
+### Overview 
+
+用Flow of Solution Procedure Matrix  (FSP) 作为正则项避免过度正则化
+
+
+
+**FSP matrix  $G\in \mathbb R^{m\times n}$**
+
+假设 
+
+* 特征图  $F^1\in \mathbb R^{h\times w\times m}$
+
+- 特征图  $F^2\in \mathbb R^{h\times w\times n}$
+
+- 那么Layer1./2的FSP   
+  $$
+  G_{i,j}(x;\mathbf W)=\sum_{s=1}^h\sum_{t=1}^w \frac{F^1_{s,t,i}(x; \mathbf W)\times F^1_{s,t,j}(x; \mathbf W)}{h\times w}
+  $$
+  ==解释： G的第i,j个元素，**表示第i个特征图 与第j个特征图**的**元素內积的均值**==
+
+
+
+**Loss**
+
+假设student and teacher 有n个FSP， 那么他们之间的loss in pair wise 
+$$
+L_{FSP}(W_t,W_s)=\frac{1}{N}\sum_{x^i}^N\sum_i^n\lambda_i\times  ||G_i^T-G_i^S||_2^2
+$$
+
+**Two-Stage 学习**
+
+1. 训练 FSP Loss
+2. 之后再在原始数据上训练 Student 
 
 
 
@@ -289,7 +502,7 @@ PS: 实验中的student采用了一个很简单的3层卷积结构。 然后对K
 
 PS: 相比于传统KD， 针对是数据不充足情况， 也并没有比较在样本充足情况下，是否比KD效果好。
 
-##Dreaming to Distill: Data-Free Knowledge Transfer via DeepInversion
+##CVPR 2020: Dreaming to Distill: Data-Free Knowledge Transfer via DeepInversion
 
 本文提出了一个用一个teacher 模型（考虑到pretrained teacher knowledge 包含了natural image set 的先验知识）来生成数据帮助训练student网络。为什么生成的数据要符合natural image prior : 防止student 在非天然数据是过度拟合。 然后本文首先提出了利用teacher BN 层的统计信息($\mu_l,\sigma_l$)，保证生成的数据尽量符合原始分布 (PS:这里优化目标是初始化为随机噪声的input)
 $$
@@ -303,15 +516,6 @@ $$
 
 
 
-## CVPR 2020:  Highlight Every Step: Knowledge Distillation via Collaborative Teaching
-
-### Overview
-
-采用了两个teacher。 其中一个teacher 是和student 一起step by step 的训练， 并用当前的输出让student 模仿teacher 训练中的每一步状态。另一个teacher类似于attention KD 提供sample的attention map 让学生模仿。
-
-
-
-实验数据表明显示这种协同训练有少量提升，但是发现作为baseline KD 本身的结果非常差。 怀疑是否也只是在当前实验设定下才work。
 
 
 
@@ -319,31 +523,6 @@ $$
 
 
 
-## CVPR 2020:  Few Sample Knowledge Distillation for Efficient Network Compression
-
-### Overview
-
-首先是从一个预训练teacher 模型prune一个student 模型，并保证他们在各个block上的feature map size一致。  然后在student模型对应teacher的block上添加1x1的卷积，来匹配student-teacher 的block输出。最后把这个1x1卷积merge到前面的卷积层里， 因为1x1 conv相当于feature map 的线性组合， 所以也是可以实现的。  最后在block wise 的student /teacher 拟合中， 是逐层进行的，即先用样本 对第一个block输出拟合，然后对第二层，依次类推。
-
-
-
-## CVPR 2020:  Search to Distill: Pearls are Everywhere but not the Eyes
-
-
-
-解决了不同结构teacher适合不同结构的student的问题。 通常teacher的结构性知识 是不能传递给student的，而且student 在不同的teacher 下performance是不同的， 而不是最优的teacher一定会训练出最优的student。 一个类比就是curve fitting里 我们需要选择不同的function family来适应不同的data。 因而给定teacher需要来搜索适合的student 结构。 主要的贡献是提出用强化学习来在predefined 结构用KD 训练指导的accuracy作为reward搜索适合的结构。
-
-
-
-
-
-## AAAI  2019: Rocket Launching: A Universal and Efficient Framework for Training Well-performing Light Net
-
-### Overview
-
-基本思路是teacher 模型和student 模型共享前几层的网络参数， 然后同时用label训练teacher 和student 并保持teacher 与student之间的logits 比较相似。
-
-从实验结果看对WRN， 对比原始KD有一定提升，但是这时候KD本身效果极差， 相信因该也是特殊实验设定的结果。
 
 
 

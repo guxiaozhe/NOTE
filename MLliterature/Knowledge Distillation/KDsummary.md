@@ -67,9 +67,9 @@
 
 >类似与之前的constrative learning那篇， 用增光的数据$\tilde x$  创造额外的任务来提高子网络。 首先在teacher最后的feature添加个MLP 输出为$(z_i,\tilde z_i)$。 MLP的训练目标是增大同一个样本的cosine相似度 $\cos(z_i,\tilde z_i)$, 而减小不同样本的输出的cos相似度。训练学生时候，student最后的feature 也添加个mlp来模仿这里的相似度矩阵。
 >
->**作用1**： 有个数据增广， 并用teacher 给label. 
+>**Point 1**： 有个数据增广， 并用teacher 给label. 
 >
->**作用2**： $(\mathbf f^T,\tilde {\mathbf f^T})$, 通过teacher MLP-student MLP-传递到student feature $\mathbf f^S$
+>**Point 2**： $(\mathbf f^T,\tilde {\mathbf f^T})$, 通过teacher MLP-student MLP-传递到student feature $\mathbf f^S$。    因为teacher 是不变的， 所以默认假设对于曾广的数据$\tilde x$ , teacher 提取的特征$\tilde z$  与原始数据特征 $z$  有很强的相关性， 所以通过一个MLP 能够区分。  对于student来说， 它的训练目标也是希望学习到这种相关性， 而不是直接的一对一直接模仿老师的特征。
 >
 >
 
